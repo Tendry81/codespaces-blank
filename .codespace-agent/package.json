@@ -1,15 +1,33 @@
 {
   "name": "codespace-agent",
   "version": "1.0.0",
-  "private": true,
+  "description": "Secure codespace agent with file operations and terminal access",
+  "main": "codespace-agent.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node codespace-agent.js",
+    "dev": "nodemon codespace-agent.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "codespace",
+    "remote",
+    "terminal",
+    "websocket",
+    "file-api"
+  ],
+  "author": "",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.19.2",
-    "ws": "^8.17.0",
-    "node-pty": "^1.0.0",
-    "cors": "^2.8.5"
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "ws": "^8.14.2",
+    "node-pty": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

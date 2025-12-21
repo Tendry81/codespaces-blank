@@ -9,7 +9,33 @@ import os from "os";
 
 /* ================= CONFIG ================= */
 const PORT = process.env.PORT || 3001;
-const WORKDIR = process.env.WORKDIR || process.cwd();
+
+// Déterminer le WORKDIR : parent du dossier .codespace-agent
+async function determineWorkdir() {
+  if (process.env.WORKDIR) {
+    return process.env.WORKDIR;
+  }
+  
+  const cwd = process.cwd();
+  
+  // Si on est dans le dossier .codespace-agent, prendre le parent
+  if (cwd.endsWith('.codespace-agent') || path.basename(cwd) === '.codespace-agent') {
+    return path.dirname(cwd);
+  }
+  
+  // Sinon, chercher le dossier .codespace-agent
+  const codespaceDir = path.join(cwd, '.codespace-agent');
+  try {
+    await fs.access(codespaceDir);
+    // .codespace-agent existe, donc cwd est le parent
+    return cwd;
+  } catch {
+    // .codespace-agent n'existe pas, utiliser le répertoire courant
+    return cwd;
+  }
+}
+
+const WORKDIR = await determineWorkdir();
 const AGENT_TOKEN = process.env.AGENT_TOKEN || 'secrets';
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_EXTENSIONS = process.env.ALLOWED_EXTENSIONS?.split(',') || null;
@@ -243,7 +269,7 @@ app.delete("/api/files", async (req, res) => {
     const stats = await getFileStats(filePath);
     
     if (stats.isDirectory) {
-      await fs.rmdir(filePath, { recursive: req.query.recursive === 'true' });
+      await fs.rm(filePath, { recursive: req.query.recursive === 'true', force: true });
     } else {
       await fs.unlink(filePath);
     }
