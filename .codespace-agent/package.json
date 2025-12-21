@@ -1,0 +1,15 @@
+{
+  "name": "codespace-agent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ws": "^8.17.0",
+    "node-pty": "^1.0.0",
+    "cors": "^2.8.5"
+  }
+}

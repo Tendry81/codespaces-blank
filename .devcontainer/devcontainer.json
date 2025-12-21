@@ -1,0 +1,16 @@
+{
+  "name": "Codespace with Agent",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+
+  "postCreateCommand": "npm --prefix .codespace-agent install",
+  "postStartCommand": "npm --prefix .codespace-agent start",
+
+  "forwardPorts": [3001],
+
+  "portsAttributes": {
+    "3001": {
+      "label": "Codespace Agent",
+      "onAutoForward": "openBrowser"
+    }
+  }
+}
