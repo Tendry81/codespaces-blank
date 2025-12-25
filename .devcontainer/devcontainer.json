@@ -1,16 +1,22 @@
 {
-  "name": "Codespace with Agent",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
-
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "hostRequirements": {
+    "cpus": 4
+  },
+  "waitFor": "onCreateCommand",
+  "updateContentCommand": "npm install",
   "postCreateCommand": "npm --prefix .codespace-agent install",
   "postStartCommand": "npm --prefix .codespace-agent start",
-
-  "forwardPorts": [3001],
-
+  "postAttachCommand": {},
+  "customizations": {},
   "portsAttributes": {
     "3001": {
-      "label": "Codespace Agent",
-      "onAutoForward": "openBrowser"
+      "label": "Codespace Agent API",
+      "onAutoForward": "openPreview"
     }
-  }
+  },
+  "forwardPorts": [3001]
 }
