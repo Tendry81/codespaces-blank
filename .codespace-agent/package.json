@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "Secure codespace agent with file operations and terminal access",
   "main": "codespace-agent.js",
-  "type": "module",
   "scripts": {
-    "start": "node codespace-agent.js",
-    "dev": "nodemon codespace-agent.js",
+    "start": "CODESPACE_NAME=$(gh codespace view --json name -q '.name') && gh codespace ports visibility 3001:public -c \"$CODESPACE_NAME\" && node agent.js",
+    "dev": "CODESPACE_NAME=$(gh codespace view --json name -q '.name') && gh codespace ports visibility 3001:public -c \"$CODESPACE_NAME\" && nodemon agent.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
